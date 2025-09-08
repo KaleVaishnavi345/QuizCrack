@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ category|capitalize }} Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .question-block { display: none; }
+        .question-block.active { display: block; }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            background: #333;
+            border-radius: 20px;
+            margin: 20px 0;
+            height: 20px;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #ffdd57;
+            border-radius: 20px;
+            transition: width 0.3s;
+        }
+        .progress-text {
+            margin-top: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ category|capitalize }} Quiz</h1>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText">Question 1 of {{ questions|length }}</div>
+
+        <!-- Quiz Form -->
+        <form id="quizForm" action="{{ url_for('submit') }}" method="post">
+            <input type="hidden" name="username" value="{{ request.args.get('username', 'Guest') }}">
+
+            {% for i, q in enumerate(questions) %}
+                <div class="question-block {% if loop.index0 == 0 %}active{% endif %}" id="q{{ i }}">
+                    <p><strong>Q{{ i+1 }}:</strong> {{ q.question }}</p>
+                    {% for opt in q.options %}
+                        <label>
+                            <input type="radio" name="q{{ i }}" value="{{ opt }}" onclick="nextQuestion({{ i }})">
+                            {{ opt }}
+                        </label><br>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </form>
+    </div>
+
+    <script>
+        let totalQuestions = {{ questions|length }};
+        let currentIndex = 0;
+
+        function nextQuestion(index) {
+            if (index < totalQuestions - 1) {
+                showQuestion(index + 1);
+            } else {
+                document.getElementById("quizForm").submit(); // Auto-submit at last question
+            }
+        }
+
+        function showQuestion(index) {
+            const blocks = document.querySelectorAll('.question-block');
+            blocks.forEach(b => b.classList.remove('active'));
+            document.getElementById('q' + index).classList.add('active');
+            currentIndex = index;
+            updateProgress();
+            window.scrollTo(0, 0);
+        }
+
+        function updateProgress() {
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            let progress = ((currentIndex + 1) / totalQuestions) * 100;
+            progressBar.style.width = progress + "%";
+            progressText.innerText = "Question " + (currentIndex + 1) + " of " + totalQuestions;
+        }
+
+        // Initialize
+        updateProgress();
+    </script>
+</body>
+</html>

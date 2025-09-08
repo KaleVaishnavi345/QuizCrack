@@ -1,0 +1,146 @@
+/* General Page Styling */
+body {
+   font-family: Arial, sans-serif;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Container */
+.container {
+    width: 85%;
+    max-width: 850px;
+    margin: 40px auto;
+    background: #ffffff10;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* Headings */
+h1, h2 {
+    color: #ffdd57;
+    margin-bottom: 20px;
+}
+
+/* Input & Buttons */
+input[type="text"] {
+    padding: 10px;
+    width: 70%;
+    border: none;
+    border-radius: 8px;
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+button {
+    background: #ffdd57;
+    color: #333;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ffc107;
+    transform: scale(1.05);
+}
+
+/* Question Block */
+.question-block {
+    background: #ffffff15;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.question-block p {
+    font-size: 18px;
+    color: #090909;
+}
+
+/* Options */
+label {
+    display: block;
+    margin: 8px 0;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Progress Bar */
+.progress-container {
+    width: 100%;
+    background: #333;
+    border-radius: 20px;
+    height: 20px;
+    margin: 15px 0;
+}
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #ffdd57;
+    border-radius: 20px;
+    transition: width 0.3s ease-in-out;
+}
+.progress-text {
+    margin-bottom: 20px;
+    font-size: 15px;
+    color: #fff;
+}
+
+/* Result Block */
+.result-block {
+    background: #ffffff15;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.result-block p {
+    margin: 5px 0;
+    font-size: 15px;
+}
+
+/* Correct / Wrong Answer Colors */
+.correct {
+    color: #4CAF50;
+    font-weight: bold;
+}
+.wrong {
+    color: #F44336;
+    font-weight: bold;
+}
+
+/* Leaderboard */
+ol {
+    text-align: left;
+    padding-left: 40px;
+    font-size: 18px;
+}
+
+ol li {
+    margin: 5px 0;
+    padding: 5px;
+    background: #ffffff20;
+    border-radius: 5px;
+}
+

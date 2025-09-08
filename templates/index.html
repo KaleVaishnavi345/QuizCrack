@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quiz Game</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome to the Quiz Game</h1>
+      <form action="" method="get">
+        <label for="username">Enter your Name:</label>
+        <input type="text" id="username" name="username" placeholder="Your Name" />
+        <p>Choose a category to start:</p>
+        <a href="#" onclick="startQuiz('gk')"
+          ><button type="button">General Knowledge</button></a
+        >
+        <a href="#" onclick="startQuiz('sports')"
+          ><button type="button">Sports</button></a
+        >
+      </form>
+    </div>
+      <script>
+        function startQuiz(category) {
+            const username = document.getElementById('username').value || 'Guest';
+            // Redirect to /quiz/category with username as query parameter
+            window.location.href = `/quiz/${category}?username=${encodeURIComponent(username)}`;
+        }
+    </script>
+  </body>
+</html>

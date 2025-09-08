@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .wrong { color: #F44336; font-weight: bold; }
+        .celebration { text-align: center; margin: 20px 0; font-size: 18px; font-style: italic; color: #2c3e50; }
+        .celebration h2 { margin-bottom: 10px; }
+        .shayari {
+            background: #fef9e7; padding: 15px; border-radius: 12px; display: inline-block;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); max-width: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz Completed!</h1>
+
+        <!-- Score -->
+        <p><strong>Your Score:</strong> {{ correct }} / {{ total }} correct</p>
+        <p><strong>Total Points:</strong> {{ points }} / {{ total*10 }}</p>
+
+        <!-- Celebration (shayari by correct answers) -->
+        <div class="celebration">
+            {% if correct == total %}
+                <h2>🏆 Perfect! All {{ total }} Correct!</h2>
+                <div class="shayari">
+                    "Manzil unhi ko milti hai,<br>
+                    Jinke sapno mein jaan hoti hai,<br>
+                    Pankh se kuchh nahin hota,<br>
+                    Hauslon se udaan hoti hai."
+                </div>
+            {% elif correct >= 14 %}
+                <h2>🎉 Fantastic! </h2>
+                <div class="shayari">
+                    "Kamyabi ka raaz sirf itna hai,<br>
+                    Har naya din nayi umeed se jeena hai,<br>
+                    Koshish karne walon ki kabhi haar nahin hoti."
+                </div>
+            {% elif correct >= 9 %}
+                <h2>👏 Great Job!</h2>
+                <div class="shayari">
+                    "Mehnat rang layegi, bas yakeen rakho,<br>
+                    Chhoti jeeton se bada safar banta hai."
+                </div>
+            {% elif correct >= 5 %}
+                <h2>💪 Don’t Give Up!</h2>
+                <div class="shayari">
+                    "Gir kar sambhalna hi zindagi hai,<br>
+                    Haar kar seekhna hi zindagi hai,<br>
+                    Koshish karte raho, jeet zaroor milegi."
+                </div>
+            {% else %}
+                <h2>🙂 Keep It Up! You got {{ correct }} correct!</h2>
+                <div class="shayari">
+                    "Chhote kadam hi bade sapne poore karte hain,<br>
+                    Har koshish safalta ki taraf le jaati hai."
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Only show wrong answers -->
+        <h2>Review Your Mistakes:</h2>
+        {% set wrong_count = 0 %}
+        {% for r in results if not r.is_correct %}
+            {% set wrong_count = wrong_count + 1 %}
+            <div class="result-block">
+                <p><strong>Question:</strong> {{ r.question }}</p>
+                <p><strong>Your Answer:</strong> <span class="wrong">{{ r.user_answer }}</span></p>
+                <p><strong>Correct Answer:</strong> <span style="color:#4CAF50; font-weight:bold;">{{ r.correct_answer }}</span></p>
+            </div>
+            <hr>
+        {% endfor %}
+
+        <!-- Leaderboard -->
+        <h2>Leaderboard (Top 5):</h2>
+        <ol>
+            {% for entry in leaderboard %}
+                <li>{{ entry.username }} - {{ entry.score }}</li>
+            {% endfor %}
+        </ol>
+
+        <a href="{{ url_for('home') }}"><button>Play Again</button></a>
+    </div>
+</body>
+</html>
